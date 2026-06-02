@@ -19,7 +19,20 @@ const adminRoutes = require('./routes/admin');
 // Ensure logs directory exists
 const logsDir = path.join(__dirname, '../logs');
 if (!fs.existsSync(logsDir)) fs.mkdirSync(logsDir, { recursive: true });
-
+ // Auto-migrate on start
+const { pool } = require('./config/database');
+pool.query(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`)
+  .then(() => pool.query(`CREATE TABLE IF NOT EXISTS users (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    role VARCHAR(20) NOT NULL DEFAULT 'user',
+    is_active BOOLEAN NOT NULL DEFAULT true,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+  )`))
+  .catch(err => console.error('Migration warning:', err.message));
 const app = express();
 
 // ─── Security Middleware ─────────────────────────────────────────────────────
@@ -28,10 +41,14 @@ app.use(helmet({
 }));
 
 app.use(cors({
-  origin: (process.env.ALLOWED_ORIGINS || 'http://localhost:3000').split(','),
+  origin: [
+    'https://taskflow-mauve-two.vercel.app',
+    'https://taskflow-dt0980sub-vikas1311codes-projects.vercel.app',
+    /\.vercel\.app$/
+  ],
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 // Global rate limiter
