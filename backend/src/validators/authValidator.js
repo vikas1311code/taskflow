@@ -22,7 +22,7 @@ const registerValidator = [
 
   body('role')
     .optional()
-    .isIn(['user', 'admin']).withMessage('Role must be user or admin'),
+    .isIn(['user', 'admin', 'User', 'Admin']).withMessage('Role must be user or admin'),
 ];
 
 const loginValidator = [
