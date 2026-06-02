@@ -3,23 +3,30 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #0d0f14;
-  --bg2: #13161e;
-  --bg3: #1a1e2a;
-  --border: #252836;
-  --text: #e8eaf0;
-  --text-muted: #7c8099;
-  --accent: #6c63ff;
-  --accent-hover: #8078ff;
-  --accent-dim: rgba(108,99,255,0.12);
-  --success: #22c55e;
-  --success-dim: rgba(34,197,94,0.1);
-  --danger: #ef4444;
-  --danger-dim: rgba(239,68,68,0.1);
-  --warning: #f59e0b;
-  --warning-dim: rgba(245,158,11,0.1);
-  --radius: 10px;
-  --shadow: 0 4px 20px rgba(0,0,0,0.4);
+  --bg: #F0E6DA;
+  --bg2: #FFFFFF;
+  --bg3: #F7F1EA;
+
+  --border: #D8CEC2;
+
+  --text: #2C2C2C;
+  --text-muted: #6B6B6B;
+
+  --accent: #415B06;
+  --accent-hover: #324704;
+  --accent-dim: rgba(65, 91, 6, 0.12);
+
+  --success: #415B06;
+  --success-dim: rgba(65, 91, 6, 0.10);
+
+  --danger: #B23A3A;
+  --danger-dim: rgba(178, 58, 58, 0.10);
+
+  --warning: #8A6D1F;
+  --warning-dim: rgba(138, 109, 31, 0.10);
+
+  --radius: 12px;
+  --shadow: 0 8px 24px rgba(0,0,0,0.08);
 }
 
 body {
@@ -28,6 +35,7 @@ body {
   color: var(--text);
   min-height: 100vh;
   line-height: 1.6;
+  margin: 0;
 }
 
 /* Form elements */
@@ -92,6 +100,7 @@ label {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 24px;
+  box-shadow: var(--shadow);
 }
 
 /* Badges */

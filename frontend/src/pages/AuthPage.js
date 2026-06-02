@@ -41,8 +41,12 @@ export default function AuthPage() {
           <div style={{
             display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
             width: 56, height: 56, background: 'var(--accent)', borderRadius: '14px',
-            marginBottom: 16, fontSize: 24
-          }}>⚡</div>
+            marginBottom: 16, fontSize: 24,color: '#fff',
+fontWeight: 800
+          }}
+>
+T
+</div>
           <h1 style={{ fontSize: 26, fontWeight: 800, letterSpacing: '-0.5px' }}>TaskFlow</h1>
           <p style={{ color: 'var(--text-muted)', marginTop: 4, fontSize: 14 }}>
             {mode === 'login' ? 'Welcome back' : 'Create your account'}
@@ -54,8 +58,7 @@ export default function AuthPage() {
           <div style={{
             display: 'flex', background: 'var(--bg3)', borderRadius: 8,
             padding: 4, marginBottom: 24, gap: 4
-          }}>
-            {['login', 'register'].map((m) => (
+          }}>            {['login', 'register'].map((m) => (
               <button key={m} onClick={() => { setMode(m); setError(''); }}
                 style={{
                   flex: 1, padding: '8px', border: 'none', borderRadius: 6,
@@ -67,7 +70,7 @@ export default function AuthPage() {
             ))}
           </div>
 
-          {error && <div className="alert alert-error">⚠ {error}</div>}
+          {error && <div className="alert alert-error">{error}</div>}
 
           <form onSubmit={handleSubmit}>
             {mode === 'register' && (
@@ -99,7 +102,7 @@ export default function AuthPage() {
             <button type="submit" className="btn btn-primary" disabled={loading}
               style={{ width: '100%', marginTop: 8, padding: '12px' }}>
               {loading ? <><span className="spinner" /> Processing...</> :
-                mode === 'login' ? '🔐 Sign In' : '🚀 Create Account'}
+                mode === 'login' ? ' Sign In' : ' Create Account'}
             </button>
           </form>
         </div>

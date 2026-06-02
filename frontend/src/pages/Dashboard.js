@@ -41,8 +41,8 @@ function TaskForm({ task, onSave, onClose }) {
   return (
     <div className="modal-overlay" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div className="modal">
-        <h2>{task ? '✏️ Edit Task' : '➕ New Task'}</h2>
-        {error && <div className="alert alert-error">⚠ {error}</div>}
+        <h2>{task ? 'Edit Task' : 'New Task'}</h2>
+        {error && <div className="alert alert-error"> {error}</div>}
         <form onSubmit={submit}>
           <div className="form-group">
             <label>Title *</label>
@@ -101,9 +101,9 @@ function TaskCard({ task, onEdit, onDelete }) {
             </p>
           )}
           <div style={{ display: 'flex', gap: 16, fontSize: 12, color: 'var(--text-muted)', flexWrap: 'wrap' }}>
-            {task.owner_name && <span>👤 {task.owner_name}</span>}
-            {task.due_date && <span>📅 {new Date(task.due_date).toLocaleDateString()}</span>}
-            <span>🕒 {new Date(task.created_at).toLocaleDateString()}</span>
+            {task.owner_name && <span> {task.owner_name}</span>}
+            {task.due_date && <span> {new Date(task.due_date).toLocaleDateString()}</span>}
+            <span> {new Date(task.created_at).toLocaleDateString()}</span>
           </div>
         </div>
         <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>
@@ -195,7 +195,21 @@ export default function Dashboard() {
         justifyContent: 'space-between', height: 60, position: 'sticky', top: 0, zIndex: 100
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <span style={{ fontSize: 20 }}>⚡</span>
+          <span
+  style={{
+    width: 30,
+    height: 30,
+    background: 'var(--accent)',
+    color: '#fff',
+    borderRadius: 8,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontWeight: 800
+  }}
+>
+  T
+</span>
           <span style={{ fontWeight: 800, fontSize: 18 }}>TaskFlow</span>
           {isAdmin && (
             <div style={{ display: 'flex', gap: 4, marginLeft: 16 }}>
@@ -247,7 +261,7 @@ export default function Dashboard() {
           <>
             {/* Filters bar */}
             <div style={{ display: 'flex', gap: 10, marginBottom: 20, flexWrap: 'wrap', alignItems: 'center' }}>
-              <input placeholder="🔍 Search tasks..." value={filters.search}
+              <input placeholder="Search tasks..." value={filters.search}
                 onChange={e => setFilters(p => ({ ...p, search: e.target.value }))}
                 style={{ flex: 1, minWidth: 180 }} />
               <select value={filters.status} onChange={e => setFilters(p => ({ ...p, status: e.target.value }))}
@@ -264,7 +278,7 @@ export default function Dashboard() {
                 Clear
               </button>
               <button className="btn btn-primary" onClick={() => { setEditTask(null); setShowForm(true); }}>
-                + New Task
+                 New Task
               </button>
             </div>
 
@@ -276,7 +290,7 @@ export default function Dashboard() {
               </div>
             ) : tasks.length === 0 ? (
               <div className="card" style={{ textAlign: 'center', padding: '48px', color: 'var(--text-muted)' }}>
-                <div style={{ fontSize: 40, marginBottom: 12 }}>📋</div>
+                
                 <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8 }}>No tasks yet</div>
                 <button className="btn btn-primary" onClick={() => { setEditTask(null); setShowForm(true); }}>
                   Create your first task
@@ -307,7 +321,7 @@ export default function Dashboard() {
 
         {activeTab === 'users' && isAdmin && (
           <div>
-            <h2 style={{ marginBottom: 20, fontSize: 18, fontWeight: 700 }}>👥 User Management</h2>
+            <h2 style={{ marginBottom: 20, fontSize: 18, fontWeight: 700 }}> User Management</h2>
             {users.map(u => (
               <div key={u.id} className="card" style={{ marginBottom: 12, display: 'flex',
                 alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
