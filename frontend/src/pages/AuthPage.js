@@ -94,8 +94,8 @@ T
               <div className="form-group">
                 <label>Role</label>
                 <select value={form.role} onChange={update('role')}>
-                  <option value="user">User</option>
-                  <option value="admin">Admin</option>
+                  <option value="user">user</option>
+                  <option value="admin">admin</option>
                 </select>
               </div>
             )}
