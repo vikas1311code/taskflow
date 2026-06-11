@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
+const API_DOCS_URL =
+  process.env.REACT_APP_API_URL
+    ? `${process.env.REACT_APP_API_URL.replace('/api/v1', '')}/api-docs`
+    : 'https://taskflow-backend-4xdz.onrender.com/api-docs';
+
 export default function AuthPage() {
   const [mode, setMode] = useState('login');
   const [form, setForm] = useState({ name: '', email: '', password: '', role: 'user' });
@@ -41,12 +46,10 @@ export default function AuthPage() {
           <div style={{
             display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
             width: 56, height: 56, background: 'var(--accent)', borderRadius: '14px',
-            marginBottom: 16, fontSize: 24,color: '#fff',
-fontWeight: 800
-          }}
->
-T
-</div>
+            marginBottom: 16, fontSize: 24, color: '#fff', fontWeight: 800,
+          }}>
+            T
+          </div>
           <h1 style={{ fontSize: 26, fontWeight: 800, letterSpacing: '-0.5px' }}>TaskFlow</h1>
           <p style={{ color: 'var(--text-muted)', marginTop: 4, fontSize: 14 }}>
             {mode === 'login' ? 'Welcome back' : 'Create your account'}
@@ -58,14 +61,15 @@ T
           <div style={{
             display: 'flex', background: 'var(--bg3)', borderRadius: 8,
             padding: 4, marginBottom: 24, gap: 4
-          }}>            {['login', 'register'].map((m) => (
+          }}>
+            {['login', 'register'].map((m) => (
               <button key={m} onClick={() => { setMode(m); setError(''); }}
                 style={{
                   flex: 1, padding: '8px', border: 'none', borderRadius: 6,
                   background: mode === m ? 'var(--accent)' : 'transparent',
                   color: mode === m ? '#fff' : 'var(--text-muted)',
                   fontFamily: 'inherit', fontSize: 14, fontWeight: 600,
-                  cursor: 'pointer', transition: 'all 0.2s', textTransform: 'capitalize'
+                  cursor: 'pointer', transition: 'all 0.2s', textTransform: 'capitalize',
                 }}>{m}</button>
             ))}
           </div>
@@ -106,9 +110,10 @@ T
             </button>
           </form>
         </div>
+
         <p style={{ textAlign: 'center', marginTop: 16, fontSize: 12, color: 'var(--text-muted)' }}>
-          API Docs: <a href="http://localhost:5000/api-docs" target="_blank" rel="noreferrer"
-            style={{ color: 'var(--accent)' }}>localhost:5000/api-docs</a>
+          API Docs: <a href={API_DOCS_URL} target="_blank" rel="noreferrer"
+            style={{ color: 'var(--accent)' }}>{API_DOCS_URL}</a>
         </p>
       </div>
     </div>

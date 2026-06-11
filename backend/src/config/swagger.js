@@ -1,5 +1,7 @@
 const swaggerJsdoc = require('swagger-jsdoc');
 
+const BACKEND_URL = process.env.BACKEND_URL || 'https://taskflow-backend-4xdz.onrender.com';
+
 const options = {
   definition: {
     openapi: '3.0.0',
@@ -21,6 +23,7 @@ Use the \`/auth/login\` endpoint to get a token, then click **Authorize** and en
       contact: { name: 'TaskFlow Team' },
     },
     servers: [
+      { url: BACKEND_URL, description: 'Production (Render)' },
       { url: 'http://localhost:5000', description: 'Local Development' },
     ],
     components: {

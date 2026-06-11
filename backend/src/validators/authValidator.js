@@ -20,9 +20,11 @@ const registerValidator = [
       'Password must contain at least one uppercase, one lowercase, and one number'
     ),
 
+  // FIX: only lowercase 'user' and 'admin' allowed — normalised before DB insert
   body('role')
     .optional()
-    .isIn(['user', 'admin', 'User', 'Admin']).withMessage('Role must be user or admin'),
+    .customSanitizer((val) => (val ? val.toLowerCase() : val))
+    .isIn(['user', 'admin']).withMessage('Role must be user or admin'),
 ];
 
 const loginValidator = [
