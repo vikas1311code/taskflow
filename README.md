@@ -1,42 +1,21 @@
-# ⚡ TaskFlow — Scalable REST API with Auth & RBAC
+# ⚡ TaskFlow – Scalable REST API with Auth & RBAC
 
-> A production-ready full-stack Task Management application built as part of the **Primetrade.ai Backend Intern Assignment**.
-
-![Status](https://img.shields.io/badge/Status-Live-brightgreen)
-![Backend](https://img.shields.io/badge/Backend-Node.js%20%2B%20Express-green)
-![Database](https://img.shields.io/badge/Database-PostgreSQL-blue)
-![Auth](https://img.shields.io/badge/Auth-JWT-orange)
-![Frontend](https://img.shields.io/badge/Frontend-React.js-61DAFB)
-
----
-
-## 🔗 Live Links
-
-| | Link |
-|---|---|
-| 🌐 **Frontend (Live App)** | [taskflow-mauve-two.vercel.app](https://taskflow-mauve-two.vercel.app) |
-| ⚙️ **Backend API** | [taskflow-backend-4xdz.onrender.com](https://taskflow-backend-4xdz.onrender.com) |
-| 📚 **Swagger API Docs** | [taskflow-backend-4xdz.onrender.com/api-docs](https://taskflow-backend-4xdz.onrender.com/api-docs) |
-| 💻 **GitHub Repository** | [github.com/vikas1311code/taskflow](https://github.com/vikas1311code/taskflow) |
-
----
+A production-ready full-stack application built for the Primetrade.ai Backend Intern assignment.
 
 ## 🏗️ Tech Stack
 
 | Layer | Technology |
 |---|---|
-| **Backend** | Node.js + Express.js |
-| **Database** | PostgreSQL (Neon / Render) |
-| **Authentication** | JWT — Access Token + Refresh Token |
-| **Password Hashing** | bcryptjs (12 salt rounds) |
-| **Validation** | express-validator |
-| **API Docs** | Swagger UI (OpenAPI 3.0) |
-| **Logging** | Winston |
-| **Security** | Helmet, CORS, Rate Limiting, XSS Sanitization |
-| **Frontend** | React.js + React Router v6 |
-| **HTTP Client** | Axios with interceptors |
-| **Deployment** | Vercel (Frontend) + Render (Backend) |
-| **Containerization** | Docker + docker-compose |
+| Backend | Node.js + Express.js |
+| Database | PostgreSQL |
+| Auth | JWT (Access + Refresh tokens) |
+| Password Hashing | bcryptjs (12 rounds) |
+| Validation | express-validator |
+| API Docs | Swagger (OpenAPI 3.0) |
+| Logging | Winston |
+| Security | Helmet, CORS, Rate Limiting, XSS sanitization |
+| Frontend | React.js + React Router |
+| HTTP Client | Axios with interceptors |
 
 ---
 
@@ -46,125 +25,125 @@
 taskflow/
 ├── backend/
 │   ├── src/
-│   │   ├── config/         # DB pool, Swagger config, migrations
-│   │   ├── controllers/    # authController, taskController, adminController
-│   │   ├── middleware/     # JWT auth, validation, error handling
-│   │   ├── models/         # User model, Task model (raw SQL)
-│   │   ├── routes/         # auth.js, tasks.js, admin.js (versioned)
+│   │   ├── config/         # DB pool, Swagger, migrations
+│   │   ├── controllers/    # Auth, Task, Admin controllers
+│   │   ├── middleware/     # Auth JWT, validation, error handling
+│   │   ├── models/         # User, Task models (raw SQL)
+│   │   ├── routes/         # auth.js, tasks.js, admin.js
 │   │   ├── utils/          # jwt.js, logger.js, response.js
 │   │   ├── validators/     # express-validator schemas
-│   │   └── server.js       # App entry point
-│   ├── logs/
+│   │   └── server.js       # Entry point
 │   ├── .env.example
-│   ├── Dockerfile
 │   └── package.json
 │
-├── frontend/
-│   ├── src/
-│   │   ├── api/            # Axios instance + all API functions
-│   │   ├── context/        # AuthContext (React Context API)
-│   │   ├── components/     # ProtectedRoute
-│   │   ├── pages/          # AuthPage (Login/Register), Dashboard
-│   │   └── App.js
-│   └── package.json
-│
-├── docker-compose.yml
-└── README.md
+└── frontend/
+    ├── src/
+    │   ├── api/            # Axios instance + API functions
+    │   ├── context/        # AuthContext (React Context)
+    │   ├── components/     # ProtectedRoute
+    │   ├── pages/          # AuthPage, Dashboard
+    │   └── App.js
+    └── package.json
 ```
 
 ---
 
-## 🚀 Local Setup (WSL / Ubuntu)
+## 🚀 Setup Instructions (WSL / Ubuntu)
 
 ### Prerequisites
 
 ```bash
-# Node.js 18+
+# Install Node.js 18+
 curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
-# PostgreSQL
+# Install PostgreSQL
 sudo apt-get install -y postgresql postgresql-contrib
 sudo service postgresql start
+
+# Verify
+node -v && npm -v && psql --version
 ```
 
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/vikas1311code/taskflow.git
-cd taskflow/taskflow
-```
-
-### 2. Database Setup
+### 1. Database Setup
 
 ```bash
 sudo -u postgres psql
 
-# Inside psql:
+# Inside psql shell:
 CREATE DATABASE taskflow_db;
 CREATE USER taskflow_user WITH PASSWORD 'your_password';
 GRANT ALL PRIVILEGES ON DATABASE taskflow_db TO taskflow_user;
 \q
 ```
 
-### 3. Backend Setup
+### 2. Backend Setup
 
 ```bash
-cd backend
+cd taskflow/backend
+
+# Install dependencies
 npm install
+
+# Configure environment
 cp .env.example .env
-# Fill in your DB credentials and JWT secrets in .env
-npm run migrate   # Creates all tables
-npm run dev       # Starts on http://localhost:5000
+# Edit .env with your DB credentials and secrets:
+nano .env
+
+# Run database migrations (creates all tables)
+npm run migrate
+
+# Start development server
+npm run dev
 ```
 
-### 4. Frontend Setup
+Backend runs at: **http://localhost:5000**  
+Swagger docs at: **http://localhost:5000/api-docs**
+
+### 3. Frontend Setup
 
 ```bash
-cd ../frontend
+cd taskflow/frontend
+
+# Install dependencies
 npm install
-npm start         # Starts on http://localhost:3000
+
+# Start React app
+npm start
 ```
 
-### 5. Docker (Optional)
-
-```bash
-# From root folder
-docker-compose up --build
-```
+Frontend runs at: **http://localhost:3000**
 
 ---
 
 ## 📌 API Endpoints
 
-Base URL: `https://taskflow-backend-4xdz.onrender.com/api/v1`
+### Auth — `/api/v1/auth`
 
-### 🔐 Auth — `/api/v1/auth`
-
-| Method | Endpoint | Auth Required | Description |
-|--------|----------|:---:|-------------|
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
 | POST | `/register` | ❌ | Register new user |
-| POST | `/login` | ❌ | Login, receive JWT tokens |
+| POST | `/login` | ❌ | Login, get JWT tokens |
 | POST | `/refresh` | ❌ | Refresh access token |
 | POST | `/logout` | ❌ | Revoke refresh token |
-| GET | `/me` | ✅ | Get current user profile |
-| PUT | `/change-password` | ✅ | Change user password |
+| GET | `/me` | ✅ | Get current user |
+| PUT | `/change-password` | ✅ | Change password |
 
-### ✅ Tasks — `/api/v1/tasks`
+### Tasks — `/api/v1/tasks`
 
-| Method | Endpoint | Auth Required | Description |
-|--------|----------|:---:|-------------|
-| GET | `/` | ✅ | List tasks (paginated + filtered) |
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| GET | `/` | ✅ | List tasks (paginated, filtered) |
 | POST | `/` | ✅ | Create new task |
-| GET | `/stats` | ✅ | Get task statistics |
-| GET | `/:id` | ✅ | Get single task by ID |
+| GET | `/stats` | ✅ | Get task stats |
+| GET | `/:id` | ✅ | Get single task |
 | PUT | `/:id` | ✅ | Update task |
 | DELETE | `/:id` | ✅ | Delete task |
 
-### 👑 Admin — `/api/v1/admin` *(Admin role required)*
+### Admin — `/api/v1/admin` (admin role required)
 
-| Method | Endpoint | Auth Required | Description |
-|--------|----------|:---:|-------------|
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
 | GET | `/users` | 🔐 Admin | List all users |
 | GET | `/users/:id` | 🔐 Admin | Get user by ID |
 | PUT | `/users/:id` | 🔐 Admin | Update any user |
@@ -172,83 +151,38 @@ Base URL: `https://taskflow-backend-4xdz.onrender.com/api/v1`
 
 ---
 
+## 🔐 Security Features
+
+- **Password Hashing**: bcryptjs with 12 salt rounds
+- **JWT Access Tokens**: Short-lived (7d), signed with secret
+- **Refresh Token Rotation**: Stored in DB, rotated on each use
+- **Token Revocation**: Logout invalidates tokens immediately
+- **Rate Limiting**: Auth endpoints: 10 req/15min; Global: 100 req/15min
+- **Helmet.js**: Sets security HTTP headers
+- **CORS**: Whitelist-only origins
+- **Input Validation**: express-validator on all inputs
+- **XSS Sanitization**: xss package on user content
+- **Role-Based Access**: Users see only their own data; Admins see all
+- **Account Deactivation**: Revokes all existing tokens
+
+---
+
 ## 🗄️ Database Schema
 
 ```sql
--- Users
-users (
-  id UUID PK,
-  name VARCHAR(100),
-  email VARCHAR(255) UNIQUE,
-  password_hash VARCHAR(255),
-  role VARCHAR(20) CHECK (role IN ('user', 'admin')),
-  is_active BOOLEAN DEFAULT true,
-  created_at, updated_at TIMESTAMPTZ
-)
+users
+  id UUID PK, name, email UNIQUE, password_hash,
+  role (user|admin), is_active, created_at, updated_at
 
--- Refresh Tokens (token rotation)
-refresh_tokens (
-  id UUID PK,
-  user_id UUID FK → users(id) ON DELETE CASCADE,
-  token VARCHAR(500) UNIQUE,
-  expires_at TIMESTAMPTZ
-)
+refresh_tokens
+  id UUID PK, user_id FK→users, token UNIQUE,
+  expires_at, created_at
 
--- Tasks
-tasks (
-  id UUID PK,
-  title VARCHAR(200),
-  description TEXT,
-  status CHECK (pending | in_progress | completed | cancelled),
-  priority CHECK (low | medium | high),
-  due_date TIMESTAMPTZ,
-  user_id UUID FK → users(id) ON DELETE CASCADE,
-  created_at, updated_at TIMESTAMPTZ
-)
-```
-
-**Indexes:** `idx_tasks_user_id`, `idx_tasks_status`, `idx_users_email`, `idx_refresh_tokens_user_id`
-
----
-
-## 🔐 Security Features
-
-- **Password Hashing** — bcryptjs with 12 salt rounds
-- **JWT Access Tokens** — Short-lived (7d), signed with secret
-- **Refresh Token Rotation** — Stored in DB, rotated on every use
-- **Token Revocation** — Logout immediately invalidates tokens
-- **Rate Limiting** — Auth: 10 req/15min | Global: 100 req/15min
-- **Helmet.js** — Secure HTTP headers
-- **CORS** — Whitelist-only origins
-- **Input Validation** — express-validator on all inputs
-- **XSS Sanitization** — `xss` package on all user content
-- **Role-Based Access** — Users see only their data; Admins see all
-- **Account Deactivation** — Revokes all existing tokens instantly
-
----
-
-## 🧪 Quick Test with curl
-
-```bash
-# 1. Register
-curl -X POST https://taskflow-backend-4xdz.onrender.com/api/v1/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Test User","email":"test@example.com","password":"Password1","role":"admin"}'
-
-# 2. Login
-curl -X POST https://taskflow-backend-4xdz.onrender.com/api/v1/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email":"test@example.com","password":"Password1"}'
-
-# 3. Create Task (replace YOUR_TOKEN)
-curl -X POST https://taskflow-backend-4xdz.onrender.com/api/v1/tasks \
-  -H "Authorization: Bearer YOUR_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"title":"My first task","priority":"high","status":"pending"}'
-
-# 4. Get all tasks
-curl https://taskflow-backend-4xdz.onrender.com/api/v1/tasks \
-  -H "Authorization: Bearer YOUR_TOKEN"
+tasks
+  id UUID PK, title, description, 
+  status (pending|in_progress|completed|cancelled),
+  priority (low|medium|high), due_date,
+  user_id FK→users, created_at, updated_at
 ```
 
 ---
@@ -256,64 +190,91 @@ curl https://taskflow-backend-4xdz.onrender.com/api/v1/tasks \
 ## 📈 Scalability Note
 
 ### Current Architecture
-Single Node.js server + PostgreSQL with connection pooling (max 20 connections).
+Single Node.js server with PostgreSQL using connection pooling (max 20 connections).
 
 ### Scaling Strategy
 
 **Horizontal Scaling**
-- Multiple Node.js instances behind **Nginx Load Balancer** (round-robin)
-- Stateless JWT already supports this — no sticky sessions needed
+- Deploy multiple Node.js instances behind an **Nginx load balancer** (round-robin)
+- Use **sticky sessions** or stateless JWT (already implemented) to support this
 
 **Database Scaling**
-- **Read Replicas** for GET-heavy workloads
-- **PgBouncer** for connection pooling at scale
-- Partition `tasks` table by `user_id` at large volumes
+- Add **read replicas** for GET-heavy workloads
+- Use **PgBouncer** for connection pooling at scale
+- Partition `tasks` table by `user_id` or `created_at` at large volumes
 
 **Caching (Redis)**
-- Cache task stats + user profiles with 60s TTL
-- Move refresh tokens to Redis for O(1) lookup
-- Distributed rate limiting via Redis
+- Cache task stats and user profiles with 60s TTL
+- Store refresh tokens in Redis instead of Postgres for O(1) lookup
+- Rate limiting via Redis for distributed environments
 
 **Microservices Path**
-```
-auth-service → task-service → notification-service
-       ↓              ↓
-   API Gateway (Kong/Nginx)
-   Message Queue (RabbitMQ/Kafka)
-```
+- Split into: `auth-service`, `task-service`, `notification-service`
+- Use message queues (RabbitMQ/Kafka) for async operations
+- API Gateway (Kong/Nginx) handles routing and auth
 
-**Deployment Pipeline**
+**Deployment**
 ```
-GitHub Push → GitHub Actions CI → Docker Build → Deploy
-     ↓
 Docker → docker-compose (dev) → Kubernetes (prod)
+CI/CD: GitHub Actions → build → test → push image → deploy
 ```
 
-**Architecture Diagram**
 ```
-              ┌─── Nginx Load Balancer ───┐
-              │                           │
-        API Node 1                  API Node 2
-              │                           │
-        ┌─────┴───────────────────────────┘
-        │
-  PostgreSQL Primary ──── Read Replica
-        │
-    Redis Cache
+                    ┌─── Load Balancer (Nginx) ───┐
+                    │                              │
+              API Node 1                     API Node 2
+                    │                              │
+              ┌─────┴──────────────────────────────┘
+              │
+       PostgreSQL Primary ──── Read Replica
+              │
+           Redis Cache
+```
+
+---
+
+## 🧪 Quick Test with curl
+
+```bash
+# Register
+curl -X POST http://localhost:5000/api/v1/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Test User","email":"test@example.com","password":"Password1","role":"admin"}'
+
+# Login
+curl -X POST http://localhost:5000/api/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@example.com","password":"Password1"}'
+
+# Create Task (replace TOKEN)
+curl -X POST http://localhost:5000/api/v1/tasks \
+  -H "Authorization: Bearer TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"title":"My first task","priority":"high","status":"pending"}'
 ```
 
 ---
 
 ## 📄 API Documentation
-
-Interactive Swagger UI: **[taskflow-backend-4xdz.onrender.com/api-docs](https://taskflow-backend-4xdz.onrender.com/api-docs)**
-
-Raw JSON spec: `https://taskflow-backend-4xdz.onrender.com/api-docs.json`
-
----
-
-## 👨‍💻 Author
-
-**Vikas** — [github.com/vikas1311code](https://github.com/vikas1311code)
-
-Built for **Primetrade.ai Backend Intern Assignment** 🚀
+Full interactive docs available at: `http://localhost:5000/api-docs`  
+Raw JSON spec at: `http://localhost:5000/api-docs.json`
+update
+update
+update
+update
+Fri Jun  5 12:37:21 UTC 2026
+Fri Jun  5 12:43:45 UTC 2026
+Sat Jun  6 18:02:25 UTC 2026
+Sat Jun  6 18:02:59 UTC 2026
+Sat Jun  6 18:03:23 UTC 2026
+Sun Jun  7 08:49:57 UTC 2026
+Sun Jun  7 08:51:11 UTC 2026
+Sun Jun  7 08:51:57 UTC 2026
+Sun Jun  7 08:52:23 UTC 2026
+Wed Jun 10 10:30:10 UTC 2026
+Wed Jun 10 10:30:38 UTC 2026
+Wed Jun 10 10:31:08 UTC 2026
+Thu Jun 11 18:10:33 UTC 2026
+Thu Jun 11 18:10:55 UTC 2026
+Thu Jun 11 18:12:13 UTC 2026
+Mon Jun 22 14:18:14 UTC 2026
